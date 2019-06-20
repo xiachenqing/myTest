@@ -1,0 +1,28 @@
+1.实例变量和类变量的声明。一般而言，最简单的判别方法就是看变量有无static关键字，如果有，则为类变量，如果没有则为实例变量。另外，实例变量在分配给不同对象的时候，占有不同的内存空间，改变一个对象的实例变量对其他对象的实例变量不产生影响。
+
+2.所有对象共享类变量。如果类中有类变量，那么当使用new运算符创建多个不同的对象时，分配给这些对象的这个类变量占有相同的一处内存，也就是说此时只要改变一个对象的这个类变量，那么其他对象的类变量也会受到影响。
+
+3.
+关于PreparedStatement接口，需要重点记住的是：
+1. PreparedStatement可以写参数化查询，比Statement能获得更好的性能。
+2. 对于PreparedStatement来说，数据库可以使用已经编译过及定义好的执行计划，这种预处理语句查询比普通的查询运行速度更快。
+3. PreparedStatement可以阻止常见的SQL注入式攻击。
+4. PreparedStatement可以写动态查询语句
+5. PreparedStatement与java.sql.Connection对象是关联的，一旦你关闭了connection，PreparedStatement也没法使用了。
+6. “?” 叫做占位符。
+7. PreparedStatement查询默认返回FORWARD_ONLY的ResultSet，你只能往一个方向移动结果集的游标。当然你还可以设定为其他类型的值如：”CONCUR_READ_ONLY”。
+8. 不支持预编译SQL查询的JDBC驱动，在调用connection.prepareStatement(sql)的时候，它不会把SQL查询语句发送给数据库做预处理，而是等到执行查询动作的时候（调用executeQuery()方法时）才把查询语句发送个数据库，这种情况和使用Statement是一样的。
+9. 占位符的索引位置从1开始而不是0，如果填入0会导致*java.sql.SQLException invalid column index*异常。所以如果PreparedStatement有两个占位符，那么第一个参数的索引时1，第二个参数的索引是2.
+
+
+4.
+1.Servlet对HTTP请求的处理过程：
+
+  A.Web浏览器通过打开一个到Web服务器的TCP Socket套接字初始化一个HTTP请求。Socket的输入流包含了HTTP请求数据，Socket的输出流中包含了HTTP响应数据
+
+  B.对于一个Servlet的每次访问请求，Web容器都会解析Socket输入流中的HTTP请求数据，创建一个请求对象(HTTPServletRequest)。同时，创建一个响应(HTTPServletResponse)，用于产生Socket输出流中的HTTP响应流
+
+  C.Web容器调用所请求的Servlet对象的service()方法，并将请求和响应对象作为参数传递给该方法
+
+  D.HTTPServletResponse对象给Servlet提供一个PrintWriter对象，使Servlet可以产生响应消息体
+
